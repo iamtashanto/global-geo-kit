@@ -4,7 +4,7 @@ import {
   getStatesOfCountry,
   getCitiesOfState,
   getAllCitiesOfCountry,
-  searchCitiesByName,
+  getAllCitiesInWorld,
 } from '@countrystatecity/countries';
 import { searchCurrencies } from '@countrystatecity/currencies';
 import { searchPhonecodes } from '@countrystatecity/phonecodes';
@@ -13,9 +13,43 @@ import { searchTimezones } from '@countrystatecity/timezones';
 export * from '@countrystatecity/countries';
 export * from '@countrystatecity/currencies';
 export * from '@countrystatecity/phonecodes';
-export * from '@countrystatecity/postalcodes';
-export * from '@countrystatecity/timezones';
-export * from '@countrystatecity/geojson';
+export {
+  getManifest,
+  getPostalCodesOfState,
+  getUnassignedPostalCodesOfCountry,
+  getAllPostalCodesOfCountry,
+  validatePostalCode,
+  lookupPostalCode,
+  searchPostalCodesByLocality,
+  searchPostalCodesByLocalityInCountry,
+  getSupportedCountryCodes,
+  isCountrySupported,
+} from '@countrystatecity/postalcodes';
+export {
+  getTimezones,
+  getTimezonesByCountry,
+  getTimezoneInfo,
+  getTimezoneAbbreviations,
+  getTimezonesByAbbreviation,
+  convertTime,
+  getCurrentTime,
+  isDaylightSaving,
+  getGMTOffset,
+  formatGMTOffset,
+  isValidTimezone,
+  searchTimezones,
+  getUniqueAbbreviations,
+  getTimezonesByOffset,
+} from '@countrystatecity/timezones';
+export {
+  configure,
+  resetConfiguration,
+  getCountriesGeoJSON,
+  getCountryGeoJSON,
+  getStatesGeoJSON,
+  getCitiesGeoJSON,
+  getAllCitiesGeoJSONOfCountry,
+} from '@countrystatecity/geojson';
 export * from '@countrystatecity/translations';
 
 export interface GlobalSearchResult {
@@ -28,7 +62,7 @@ export async function searchGlobal(query: string, limit = 20): Promise<GlobalSea
   if (!term) return [];
   const [countries, cities, currencies, phonecodes, timezones] = await Promise.all([
     getCountries(),
-    searchCitiesByName(term),
+    getAllCitiesInWorld(),
     searchCurrencies(term),
     searchPhonecodes(term),
     searchTimezones(term),
@@ -37,7 +71,10 @@ export async function searchGlobal(query: string, limit = 20): Promise<GlobalSea
   const countryResults = countries
     .filter((country) => [country.name, country.iso2, country.iso3].some((value) => value?.toLocaleLowerCase().includes(normalized)))
     .map((value) => ({ type: 'country' as const, value }));
-  return [...countryResults, ...cities.map((value) => ({ type: 'city' as const, value })),
+  const cityResults = cities
+    .filter((city) => city.name.toLocaleLowerCase().includes(normalized))
+    .map((value) => ({ type: 'city' as const, value }));
+  return [...countryResults, ...cityResults,
     ...currencies.map((value) => ({ type: 'currency' as const, value })),
     ...phonecodes.map((value) => ({ type: 'phonecode' as const, value })),
     ...timezones.map((value) => ({ type: 'timezone' as const, value }))].slice(0, limit);
