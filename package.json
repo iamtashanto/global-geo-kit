@@ -1,0 +1,41 @@
+{
+  "name": "global-geo-kit",
+  "version": "0.1.0",
+  "description": "All-in-one global location toolkit: countries, states, cities, currencies, phone codes, postal codes, timezones and GeoJSON.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "NOTICE-ODBL.txt"],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --input-type=module -e \"import('./dist/index.js').then(async ({getCountryByCode}) => { if (!(await getCountryByCode('BD'))) process.exit(1); })\""
+  },
+  "keywords": ["geo", "geolocation", "countries", "states", "cities", "currencies", "phone-codes", "postal-codes", "timezones", "geojson", "typescript"],
+  "author": "TA Shanto",
+  "license": "MIT",
+  "repository": {"type": "git", "url": "git+https://github.com/iamtashanto/global-geo-kit.git"},
+  "publishConfig": {"access": "public"},
+  "dependencies": {
+    "@countrystatecity/countries": "^3.0.1",
+    "@countrystatecity/currencies": "^2.0.2",
+    "@countrystatecity/geojson": "^3.0.1",
+    "@countrystatecity/phonecodes": "^1.0.4",
+    "@countrystatecity/postalcodes": "^3.0.1",
+    "@countrystatecity/timezones": "^2.0.2",
+    "@countrystatecity/translations": "^1.0.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsup": "^9.0.0",
+    "typescript": "^7.0.2"
+  }
+}

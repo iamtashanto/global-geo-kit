@@ -1,0 +1,9 @@
+This package includes or depends on geographic datasets derived from
+Countries States Cities Database by dr5hn and contributors.
+
+The source dataset is available at:
+https://github.com/dr5hn/countries-states-cities-database
+
+Those datasets are provided under the Open Database License (ODbL-1.0).
+Database rights and attribution obligations remain applicable to the
+underlying data. This wrapper's original source code is licensed under MIT.
