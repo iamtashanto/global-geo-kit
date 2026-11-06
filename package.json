@@ -1,7 +1,7 @@
 {
   "name": "global-geo-kit",
-  "version": "0.1.0",
-  "description": "All-in-one global location toolkit: countries, states, cities, currencies, phone codes, postal codes, timezones and GeoJSON.",
+  "version": "0.2.0",
+  "description": "The all-in-one global location toolkit for countries, states, cities, currencies, phone codes, postal codes, timezones, GeoJSON and search.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -16,7 +16,10 @@
   "files": [
     "dist",
     "README.md",
-    "NOTICE-ODBL.txt"
+    "RELEASING.md",
+    "NOTICE-ODBL.txt",
+    "DATA-PROVENANCE.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
@@ -44,6 +47,15 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "homepage": "https://globalgeokit.tashanto.com",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://www.supportkori.com/iamtashanto"
   },
   "dependencies": {
     "@countrystatecity/countries": "^3.0.1",
